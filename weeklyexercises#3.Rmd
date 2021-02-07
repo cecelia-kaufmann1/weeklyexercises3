@@ -315,6 +315,10 @@ first_ten
   18. Use a join operation to make a table with only those trips whose departures match those top ten station-date combinations from the previous part.
   
 ```{r}
+newtable <- first_ten %>%
+  left_join(Stations,
+            by =c ("sstation" = "name"))
+newtable
 
 ```
   
