@@ -88,6 +88,8 @@ garden_harvest %>%
 
   3. I would like to understand how much money I "saved" by gardening, for each vegetable type. Describe how I could use the `garden_harvest` and `garden_spending` datasets, along with data from somewhere like [this](https://products.wholefoodsmarket.com/search?sort=relevance&store=10542) to answer this question. You can answer this in words, referencing various join functions. You don't need R code but could provide some if it's helpful.
   
+  First, I think it would be best to join the 'garden_harvest' and 'garden_spending' data, using the left join function and probably join it by vegetable. From there, you then have a table of how much (in grams, or lbs if you convert it, which could yield itself useful) you collected, how much it cost to buy the seeds. Once converted to pounds, you could compare how much you spent on the seeds to yield the amount of vegetable you collected with a site like Whole Foods and discover how much each of the vegetables cost per pound. If you wanted to get even more specific, you could add a column with the prices/lbs. from Whole Foods, and subtract from how much it cost to produce a lb. of your planted vegetables. You could use the mutate or summarize variables to add these columns. The results, you would most likely discover, is if you had a successful production this summer, you probably saved money growing your own vegetables. 
+  
   
 
   4. Subset the data to tomatoes. Reorder the tomato varieties from smallest to largest first harvest date. Create a barplot of total harvest in pounds for each variety, in the new order.
@@ -100,7 +102,9 @@ garden_harvest %>%
   group_by(variety) %>%
   mutate(total_harvest_weight = sum(weight_lbs)) %>%
   ggplot(aes(x = total_harvest_weight, y = variety)) +
-  geom_col()
+  geom_col(fill = "07DFFB") +
+  labs("Variety of Tomatoes vs. Total Harvest Weight of the Variety",
+       x = "", y = "")
 
 ```
 
@@ -113,7 +117,6 @@ garden_harvest %>%
   arrange(vegetable, desc(findstringlength)) %>%
   distinct(vegetable, variety, .keep_all = TRUE) %>%
   select(-date, -weight, -units)
-
 ```
 
   6. In the `garden_harvest` data, find all distinct vegetable varieties that have "er" or "ar" in their name. HINT: `str_detect()` with an "or" statement (use the | for "or") and `distinct()`.
@@ -123,8 +126,6 @@ garden_harvest %>%
   mutate(arernames = str_detect(variety, "er|ar")) %>%
   filter(arernames == TRUE) %>%
   distinct(vegetable, variety)
-  
-
 ```
 
 
@@ -157,7 +158,8 @@ It's natural to expect that bikes are rented more at some times of day, some day
 ```{r}
 Trips %>%
   ggplot(aes(x = sdate)) +
-  geom_density()
+  geom_density() +
+  labs(title = "Events vs. Date", x = "", y = "")
 ```
   
   8. A density plot of the events versus time of day.  You can use `mutate()` with `lubridate`'s  `hour()` and `minute()` functions to extract the hour of the day and minute within the hour from `sdate`. Hint: A minute is 1/60 of an hour, so create a variable where 3:30 is 3.5 and 3:45 is 3.75.
@@ -168,7 +170,8 @@ Trips %>%
          sdate_min = minute(sdate),
          time = sdate_hr + (sdate_min/60))%>%
   ggplot(aes(x = time)) +
-  geom_density()
+  geom_density() +
+  labs(title = "Events vs. Time", x = "", y = "")
 ```
   
   9. A bar graph of the events versus day of the week. Put day on the y-axis.
@@ -224,7 +227,11 @@ Trips %>%
   ggplot() +
   geom_density(aes(x = time, fill = client), alpha = 0.5,
                position = position_stack()) +
-  facet_wrap(~ day)
+  facet_wrap(~ day) +
+  labs(title = "Peak Bike Rental Time Over Each Day of the Week",
+       x = "Time of Day (24 Hour Period",
+       y = "",
+       fill = "Client Type")
 
 ```
   
@@ -237,7 +244,11 @@ Trips %>%
          weekend = ifelse(day_of_week %in% c("Sun","Sat"), "weekend", "weekday")) %>%
   ggplot() +
   geom_density(aes(x = time_of_day, fill = client), alpha = 0.5) +
-  facet_wrap(vars(weekend))
+  facet_wrap(vars(weekend)) +
+  labs(title = "Bike Rental Peak Time Over a Day Split by Week and Weekend",
+       x = "Time of Day (24hr time)",
+       y = "",
+       fill = "Client Type")
 
 ```
   
@@ -250,7 +261,11 @@ Trips %>%
          weekend = ifelse(day_of_week %in% c("Sun","Sat"), "weekend", "weekday")) %>%
   ggplot() +
   geom_density(aes(x = time_of_day, fill = weekend), alpha = 0.5) +
-  facet_wrap(vars(client))
+  facet_wrap(vars(client)) +
+  labs(title = "Bike Rental Peak Time Over a Day Split by Week and Weekend",
+       x = "Time of Day (24hr time)",
+       y = "",
+       fill = "Client Type")
 
 ```
   
@@ -266,7 +281,12 @@ Stations %>%
   mutate(numtimes = n()) %>%
   ggplot() +
   geom_point(aes(x = long, y = lat, color = numtimes)) +
-  scale_color_viridis_c()
+  scale_color_viridis_c() +
+  labs(title = "Longtitude vs. Latitude of Bike Stations and the Frequency of Departures from Each Station ",
+       x = "Longitude",
+       y = "Latitude",
+       fill = "Number of Departures")
+
 
 ```
   
