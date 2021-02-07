@@ -72,11 +72,10 @@ garden_harvest %>%
 ```
 
   2. Summarize the `garden_harvest` data to find the total harvest in pound for each vegetable variety and then try adding the plot from the `garden_planting` table. This will not turn out perfectly. What is the problem? How might you fix it?
+  
+
   The problem is that for the vegetables planted in multiple plots show up multiple times in the table. We can see this is an issue because there are fewer coding lines for the summarize (67) then for left_join(93). One way we could fix this is by using the distinct function to pick out when the vegetable is used in each specfic plot. 
   
-fewer codes for summarize then left_join
-
-
 ```{r}
 garden_harvest %>%
   group_by(vegetable, variety) %>%
@@ -353,8 +352,5 @@ This problem uses the data from the Tidy Tuesday competition this week, `kids`. 
               values_from = inf_adj_perchild) %>%
   mutate(diff = year_2016 - year_1997) 
 ```
-
-  
-![](kids_data_karamanis.jpeg)
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**
