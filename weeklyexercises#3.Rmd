@@ -340,6 +340,21 @@ This problem uses the data from the Tidy Tuesday competition this week, `kids`. 
 
   21. In this exercise, you are going to try to replicate the graph below, created by Georgios Karamanis. I'm sure you can find the exact code on GitHub somewhere, but **DON'T DO THAT!** You will only be graded for putting an effort into this problem. So, give it a try and see how far you can get without doing too much googling. HINT: use `facet_geo()`. The graphic won't load below since it came from a location on my computer. So, you'll have to reference the original html on the moodle page to see it.
   
+  Below is the furthest I could get, but I know that somehow you would need to ggplot line segments coming from a seperate (ggplot_point) plot of points. From there, you could facet_geo() so you get the map shape and you would somehow have to label all of the states. 
+  
+```{r}
+ kids %>% 
+  filter(variable == "lib") %>% 
+  filter(year == 1997 | year == 2016) %>%
+  mutate(inf_adj_perchild = inf_adj_perchild * 1000) %>%
+  pivot_wider(id_cols = state, 
+              names_from = year,
+              names_prefix = "year_",
+              values_from = inf_adj_perchild) %>%
+  mutate(diff = year_2016 - year_1997) 
+```
+
+  
 ![](kids_data_karamanis.jpeg)
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**
