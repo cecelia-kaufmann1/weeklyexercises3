@@ -109,22 +109,19 @@ These exercises will reiterate what you learned in the "Expanding the data wrang
 
 ```r
 garden_harvest %>%
-  mutate(daysum = wday(date, label = TRUE),
-         weightinlbs = weight * 0.00220462) %>%
-  group_by(vegetable, daysum) %>%
-  summarize(totalweight = sum(weightinlbs)) %>%
+  mutate(day = wday(date, label = TRUE)) %>%
+  group_by(vegetable, day) %>%
+  mutate(wt_lbs =  weight * .00220462) %>%
+  summarise(total_wt_lbs = sum(wt_lbs)) %>%
+  arrange(day) %>%
   pivot_wider(id_cols = vegetable,
-              names_from = daysum,
-              values_from = totalweight)
-```
-
-```
-## `summarise()` regrouping output by 'vegetable' (override with `.groups` argument)
+              names_from = day,
+              values_from = total_wt_lbs)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sat"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mon"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Tue"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Thu"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Fri"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Sun"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Wed"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"apple","2":"0.34392072","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"asparagus","2":"0.04409240","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"basil","2":"0.41005932","3":"0.0661386","4":"0.11023100","5":"0.02645544","6":"0.46737944","7":"NA","8":"NA"},{"1":"beans","2":"4.70906832","3":"6.5080382","4":"4.38719380","5":"3.39291018","6":"1.52559704","7":"1.91361016","8":"4.08295624"},{"1":"beets","2":"0.37919464","3":"0.6724091","4":"0.15873264","5":"11.89172028","6":"0.02425082","7":"0.32187452","8":"0.18298346"},{"1":"broccoli","2":"NA","3":"0.8201186","4":"NA","5":"NA","6":"0.16534650","7":"1.25883802","8":"0.70768302"},{"1":"carrots","2":"2.33028334","3":"0.8708249","4":"0.35273920","5":"2.67420406","6":"2.13848140","7":"2.93655384","8":"5.56225626"},{"1":"chives","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"0.01763696"},{"1":"cilantro","2":"0.03747854","3":"NA","4":"0.00440924","5":"NA","6":"0.07275246","7":"NA","8":"NA"},{"1":"corn","2":"1.31615814","3":"0.7583893","4":"0.72752460","5":"NA","6":"3.44802568","7":"1.45725382","8":"5.30211110"},{"1":"cucumbers","2":"9.64080326","3":"4.7752069","4":"10.04645334","5":"3.30693000","6":"7.42956940","7":"3.10410496","8":"5.30652034"},{"1":"edamame","2":"4.68922674","3":"NA","4":"1.40213832","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"hot peppers","2":"NA","3":"1.2588380","4":"0.14109568","5":"NA","6":"NA","7":"NA","8":"0.06834322"},{"1":"jalapeño","2":"1.50796008","3":"5.5534378","4":"0.54895038","5":"0.22487124","6":"1.29411194","7":"0.26234978","8":"0.48060716"},{"1":"kale","2":"1.49032312","3":"2.0679336","4":"0.28219136","5":"0.27998674","6":"0.38139926","7":"0.82673250","8":"0.61729360"},{"1":"kohlrabi","2":"NA","3":"NA","4":"NA","5":"0.42108242","6":"NA","7":"NA","8":"NA"},{"1":"lettuce","2":"1.31615814","3":"2.4581513","4":"0.91712192","5":"2.45153744","6":"1.80117454","7":"1.46607230","8":"1.18608556"},{"1":"onions","2":"1.91361016","3":"0.5092672","4":"0.70768302","5":"0.60186126","6":"0.07275246","7":"0.26014516","8":"NA"},{"1":"peas","2":"2.85277828","3":"4.6341112","4":"2.06793356","5":"3.39731942","6":"0.93696350","7":"2.05691046","8":"1.08026380"},{"1":"peppers","2":"1.38229674","3":"2.5264945","4":"1.44402610","5":"0.70988764","6":"0.33510224","7":"0.50265336","8":"2.44271896"},{"1":"potatoes","2":"2.80207202","3":"0.9700328","4":"NA","5":"11.85203712","6":"3.74124014","7":"NA","8":"4.57017726"},{"1":"pumpkins","2":"92.68883866","3":"30.1195184","4":"31.85675900","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"radish","2":"0.23148510","3":"0.1962112","4":"0.09479866","5":"0.14770954","6":"0.19400656","7":"0.08157094","8":"NA"},{"1":"raspberries","2":"0.53351804","3":"0.1300726","4":"0.33510224","5":"0.28880522","6":"0.57099658","7":"NA","8":"NA"},{"1":"rutabaga","2":"6.89825598","3":"NA","4":"NA","5":"NA","6":"3.57809826","7":"19.26396956","8":"NA"},{"1":"spinach","2":"0.26014516","3":"0.1477095","4":"0.49603950","5":"0.23368972","6":"0.19621118","7":"0.48722102","8":"0.21384814"},{"1":"squash","2":"56.22221924","3":"24.3345956","4":"18.46810174","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"strawberries","2":"0.16975574","3":"0.4784025","4":"NA","5":"0.08818480","6":"0.48722102","7":"0.08157094","8":"NA"},{"1":"Swiss chard","2":"0.73413846","3":"1.0736499","4":"0.07054784","5":"2.23107544","6":"0.61729360","7":"1.24781492","8":"0.90830344"},{"1":"tomatoes","2":"35.12621046","3":"11.4926841","4":"48.75076206","5":"34.51773534","6":"85.07628580","7":"75.60964752","8":"58.26590198"},{"1":"zucchini","2":"3.41495638","3":"12.1959578","4":"16.46851140","5":"34.63017096","6":"18.72163304","7":"12.23564100","8":"2.04147812"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sun"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mon"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Tue"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Wed"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Thu"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Fri"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Sat"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"beans","2":"1.91361016","3":"6.5080382","4":"4.38719380","5":"4.08295624","6":"3.39291018","7":"1.52559704","8":"4.70906832"},{"1":"beets","2":"0.32187452","3":"0.6724091","4":"0.15873264","5":"0.18298346","6":"11.89172028","7":"0.02425082","8":"0.37919464"},{"1":"broccoli","2":"1.25883802","3":"0.8201186","4":"NA","5":"0.70768302","6":"NA","7":"0.16534650","8":"NA"},{"1":"carrots","2":"2.93655384","3":"0.8708249","4":"0.35273920","5":"5.56225626","6":"2.67420406","7":"2.13848140","8":"2.33028334"},{"1":"corn","2":"1.45725382","3":"0.7583893","4":"0.72752460","5":"5.30211110","6":"NA","7":"3.44802568","8":"1.31615814"},{"1":"cucumbers","2":"3.10410496","3":"4.7752069","4":"10.04645334","5":"5.30652034","6":"3.30693000","7":"7.42956940","8":"9.64080326"},{"1":"jalapeño","2":"0.26234978","3":"5.5534378","4":"0.54895038","5":"0.48060716","6":"0.22487124","7":"1.29411194","8":"1.50796008"},{"1":"kale","2":"0.82673250","3":"2.0679336","4":"0.28219136","5":"0.61729360","6":"0.27998674","7":"0.38139926","8":"1.49032312"},{"1":"lettuce","2":"1.46607230","3":"2.4581513","4":"0.91712192","5":"1.18608556","6":"2.45153744","7":"1.80117454","8":"1.31615814"},{"1":"onions","2":"0.26014516","3":"0.5092672","4":"0.70768302","5":"NA","6":"0.60186126","7":"0.07275246","8":"1.91361016"},{"1":"peas","2":"2.05691046","3":"4.6341112","4":"2.06793356","5":"1.08026380","6":"3.39731942","7":"0.93696350","8":"2.85277828"},{"1":"peppers","2":"0.50265336","3":"2.5264945","4":"1.44402610","5":"2.44271896","6":"0.70988764","7":"0.33510224","8":"1.38229674"},{"1":"radish","2":"0.08157094","3":"0.1962112","4":"0.09479866","5":"NA","6":"0.14770954","7":"0.19400656","8":"0.23148510"},{"1":"rutabaga","2":"19.26396956","3":"NA","4":"NA","5":"NA","6":"NA","7":"3.57809826","8":"6.89825598"},{"1":"spinach","2":"0.48722102","3":"0.1477095","4":"0.49603950","5":"0.21384814","6":"0.23368972","7":"0.19621118","8":"0.26014516"},{"1":"strawberries","2":"0.08157094","3":"0.4784025","4":"NA","5":"NA","6":"0.08818480","7":"0.48722102","8":"0.16975574"},{"1":"Swiss chard","2":"1.24781492","3":"1.0736499","4":"0.07054784","5":"0.90830344","6":"2.23107544","7":"0.61729360","8":"0.73413846"},{"1":"tomatoes","2":"75.60964752","3":"11.4926841","4":"48.75076206","5":"58.26590198","6":"34.51773534","7":"85.07628580","8":"35.12621046"},{"1":"zucchini","2":"12.23564100","3":"12.1959578","4":"16.46851140","5":"2.04147812","6":"34.63017096","7":"18.72163304","8":"3.41495638"},{"1":"basil","2":"NA","3":"0.0661386","4":"0.11023100","5":"NA","6":"0.02645544","7":"0.46737944","8":"0.41005932"},{"1":"hot peppers","2":"NA","3":"1.2588380","4":"0.14109568","5":"0.06834322","6":"NA","7":"NA","8":"NA"},{"1":"potatoes","2":"NA","3":"0.9700328","4":"NA","5":"4.57017726","6":"11.85203712","7":"3.74124014","8":"2.80207202"},{"1":"pumpkins","2":"NA","3":"30.1195184","4":"31.85675900","5":"NA","6":"NA","7":"NA","8":"92.68883866"},{"1":"raspberries","2":"NA","3":"0.1300726","4":"0.33510224","5":"NA","6":"0.28880522","7":"0.57099658","8":"0.53351804"},{"1":"squash","2":"NA","3":"24.3345956","4":"18.46810174","5":"NA","6":"NA","7":"NA","8":"56.22221924"},{"1":"cilantro","2":"NA","3":"NA","4":"0.00440924","5":"NA","6":"NA","7":"0.07275246","8":"0.03747854"},{"1":"edamame","2":"NA","3":"NA","4":"1.40213832","5":"NA","6":"NA","7":"NA","8":"4.68922674"},{"1":"chives","2":"NA","3":"NA","4":"NA","5":"0.01763696","6":"NA","7":"NA","8":"NA"},{"1":"kohlrabi","2":"NA","3":"NA","4":"NA","5":"NA","6":"0.42108242","7":"NA","8":"NA"},{"1":"apple","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"0.34392072"},{"1":"asparagus","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"0.04409240"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -225,7 +222,7 @@ Here is the code to read in the data. We do this a little differently than usual
 
 ```r
 data_site <- 
-  "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data-Small.rds" 
+  "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data.rds" 
 Trips <- readRDS(gzcon(url(data_site)))
 Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv")
 ```
@@ -292,6 +289,8 @@ Trips %>%
   
   10. Facet your graph from exercise 8. by day of the week. Is there a pattern?
   
+  
+
 
 ```r
 Trips %>%
@@ -318,13 +317,16 @@ Trips %>%
          time = sdate_hr + (sdate_min/60),
          day = wday(sdate, label = TRUE)) %>%
   ggplot() +
-  geom_density(aes(x = time, fill = client), alpha = 0.5) +
+  geom_density(aes(x = time, fill = client), alpha = 0.5, color = NA) +
   facet_wrap(~ day)
 ```
 
 ![](weeklyexercises-3_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
   12. Change the previous graph by adding the argument `position = position_stack()` to `geom_density()`. In your opinion, is this better or worse in terms of telling a story? What are the advantages/disadvantages of each?
+  
+
+
   
 
 ```r
@@ -338,7 +340,7 @@ Trips %>%
                position = position_stack()) +
   facet_wrap(~ day) +
   labs(title = "Peak Bike Rental Time Over Each Day of the Week",
-       x = "Time of Day (24 Hour Period",
+       x = "Time of Day (24 Hour Period)",
        y = "",
        fill = "Client Type")
 ```
@@ -409,6 +411,20 @@ Stations %>%
   
 
   
+
+```r
+Stations %>%
+  left_join(Trips,
+            by = c("name" = "sstation")) %>%
+  group_by(long, lat) %>%
+  #filter(client == "Casual") %>%
+  mutate(numtimes = n()) %>%
+  ggplot() +
+  geom_point(aes(x = long, y = lat, color = numtimes, fill = client)) 
+```
+
+![](weeklyexercises-3_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+  
 ### Spatiotemporal patterns
 
   17. Make a table with the ten station-date combinations (e.g., 14th & V St., 2014-10-14) with the highest number of departures, sorted from most departures to fewest. Save this to a new dataset and print out the dataset. Hint: `as_date(sdate)` converts `sdate` from date-time format to date format. 
@@ -429,7 +445,7 @@ first_ten
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["date_format"],"name":[1],"type":["date"],"align":["right"]},{"label":["sstation"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"2014-11-12","2":"Columbus Circle / Union Station","3":"11"},{"1":"2014-10-05","2":"Lincoln Memorial","3":"9"},{"1":"2014-12-27","2":"Jefferson Dr & 14th St SW","3":"9"},{"1":"2014-10-09","2":"Lincoln Memorial","3":"8"},{"1":"2014-10-01","2":"Massachusetts Ave & Dupont Circle NW","3":"7"},{"1":"2014-10-02","2":"Columbus Circle / Union Station","3":"7"},{"1":"2014-10-06","2":"17th St & Massachusetts Ave NW","3":"7"},{"1":"2014-10-16","2":"New Hampshire Ave & T St NW","3":"7"},{"1":"2014-10-25","2":"Georgetown Harbor / 30th St NW","3":"7"},{"1":"2014-10-01","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-10-01","2":"North Capitol St & F St NW","3":"6"},{"1":"2014-10-04","2":"Lincoln Memorial","3":"6"},{"1":"2014-10-08","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-10-09","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-10-14","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-10-17","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-10-18","2":"Jefferson Dr & 14th St SW","3":"6"},{"1":"2014-10-18","2":"Lincoln Memorial","3":"6"},{"1":"2014-10-23","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-10-23","2":"Massachusetts Ave & Dupont Circle NW","3":"6"},{"1":"2014-10-25","2":"Jefferson Memorial","3":"6"},{"1":"2014-10-25","2":"Lincoln Memorial","3":"6"},{"1":"2014-10-25","2":"Smithsonian / Jefferson Dr & 12th St SW","3":"6"},{"1":"2014-10-28","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-10-31","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-11-04","2":"Columbus Circle / Union Station","3":"6"},{"1":"2014-11-06","2":"Massachusetts Ave & Dupont Circle NW","3":"6"},{"1":"2014-11-07","2":"14th & V St NW","3":"6"},{"1":"2014-12-10","2":"US Dept of State / Virginia Ave & 21st St NW","3":"6"},{"1":"2014-12-15","2":"15th & Euclid St  NW","3":"6"},{"1":"2014-12-16","2":"Columbus Circle / Union Station","3":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["date_format"],"name":[1],"type":["date"],"align":["right"]},{"label":["sstation"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"2014-10-25","2":"Lincoln Memorial","3":"386"},{"1":"2014-10-18","2":"Lincoln Memorial","3":"354"},{"1":"2014-10-26","2":"Lincoln Memorial","3":"349"},{"1":"2014-10-27","2":"Columbus Circle / Union Station","3":"345"},{"1":"2014-10-04","2":"Lincoln Memorial","3":"337"},{"1":"2014-10-02","2":"Columbus Circle / Union Station","3":"334"},{"1":"2014-10-28","2":"Columbus Circle / Union Station","3":"333"},{"1":"2014-10-12","2":"Lincoln Memorial","3":"328"},{"1":"2014-10-09","2":"Columbus Circle / Union Station","3":"327"},{"1":"2014-10-08","2":"Columbus Circle / Union Station","3":"322"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
   
@@ -445,12 +461,19 @@ newtable
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["date_format"],"name":[1],"type":["date"],"align":["right"]},{"label":["sstation"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]},{"label":["lat"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["nbBikes"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["nbEmptyDocks"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"2014-11-12","2":"Columbus Circle / Union Station","3":"11","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-05","2":"Lincoln Memorial","3":"9","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-12-27","2":"Jefferson Dr & 14th St SW","3":"9","4":"38.88855","5":"-77.03243","6":"10","7":"13"},{"1":"2014-10-09","2":"Lincoln Memorial","3":"8","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-01","2":"Massachusetts Ave & Dupont Circle NW","3":"7","4":"38.91010","5":"-77.04440","6":"16","7":"28"},{"1":"2014-10-02","2":"Columbus Circle / Union Station","3":"7","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-06","2":"17th St & Massachusetts Ave NW","3":"7","4":"38.90814","5":"-77.03836","6":"7","7":"12"},{"1":"2014-10-16","2":"New Hampshire Ave & T St NW","3":"7","4":"38.91554","5":"-77.03818","6":"4","7":"18"},{"1":"2014-10-25","2":"Georgetown Harbor / 30th St NW","3":"7","4":"38.90222","5":"-77.05922","6":"10","7":"9"},{"1":"2014-10-01","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-01","2":"North Capitol St & F St NW","3":"6","4":"38.89745","5":"-77.00989","6":"21","7":"0"},{"1":"2014-10-04","2":"Lincoln Memorial","3":"6","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-08","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-09","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-14","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-17","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-18","2":"Jefferson Dr & 14th St SW","3":"6","4":"38.88855","5":"-77.03243","6":"10","7":"13"},{"1":"2014-10-18","2":"Lincoln Memorial","3":"6","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-23","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-23","2":"Massachusetts Ave & Dupont Circle NW","3":"6","4":"38.91010","5":"-77.04440","6":"16","7":"28"},{"1":"2014-10-25","2":"Jefferson Memorial","3":"6","4":"38.87982","5":"-77.03741","6":"8","7":"15"},{"1":"2014-10-25","2":"Lincoln Memorial","3":"6","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-25","2":"Smithsonian / Jefferson Dr & 12th St SW","3":"6","4":"38.88877","5":"-77.02858","6":"11","7":"10"},{"1":"2014-10-28","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-31","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-11-04","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-11-06","2":"Massachusetts Ave & Dupont Circle NW","3":"6","4":"38.91010","5":"-77.04440","6":"16","7":"28"},{"1":"2014-11-07","2":"14th & V St NW","3":"6","4":"38.91760","5":"-77.03210","6":"7","7":"20"},{"1":"2014-12-10","2":"US Dept of State / Virginia Ave & 21st St NW","3":"6","4":"38.89492","5":"-77.04659","6":"6","7":"9"},{"1":"2014-12-15","2":"15th & Euclid St  NW","3":"6","4":"38.92333","5":"-77.03520","6":"5","7":"10"},{"1":"2014-12-16","2":"Columbus Circle / Union Station","3":"6","4":"38.89696","5":"-77.00493","6":"14","7":"25"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["date_format"],"name":[1],"type":["date"],"align":["right"]},{"label":["sstation"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]},{"label":["lat"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["nbBikes"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["nbEmptyDocks"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"2014-10-25","2":"Lincoln Memorial","3":"386","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-18","2":"Lincoln Memorial","3":"354","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-26","2":"Lincoln Memorial","3":"349","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-27","2":"Columbus Circle / Union Station","3":"345","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-04","2":"Lincoln Memorial","3":"337","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-02","2":"Columbus Circle / Union Station","3":"334","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-28","2":"Columbus Circle / Union Station","3":"333","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-12","2":"Lincoln Memorial","3":"328","4":"38.88825","5":"-77.04943","6":"3","7":"22"},{"1":"2014-10-09","2":"Columbus Circle / Union Station","3":"327","4":"38.89696","5":"-77.00493","6":"14","7":"25"},{"1":"2014-10-08","2":"Columbus Circle / Union Station","3":"322","4":"38.89696","5":"-77.00493","6":"14","7":"25"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
   
   19. Build on the code from the previous problem (ie. copy that code below and then %>% into the next step.) and group the trips by client type and day of the week (use the name, not the number). Find the proportion of trips by day within each client type (ie. the proportions for all 7 days within each client type add up to 1). Display your results so day of week is a column and there is a column for each client type. Interpret your results.
+  
 
+
+```r
+newtable <- first_ten %>%
+  left_join(Stations,
+            by =c ("sstation" = "name"))
+```
   
 
 **DID YOU REMEMBER TO GO BACK AND CHANGE THIS SET OF EXERCISES TO THE LARGER DATASET? IF NOT, DO THAT NOW.**
